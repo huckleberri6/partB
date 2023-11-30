@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <string>
 using namespace std;
 
 bool isLeapYear(int year);
@@ -8,42 +9,46 @@ int dayOfWeek(int month, int day, int year);
 
 int main()
 {
-	int day;
-	int month;
+	string month;
 	int year;
-	cout << "Enter a date or Q to quit: ";
-	cin >> month >> day >> year;
+	cout << "Enter a month and year or Q to quit: ";
+	cin >> month >> year;
 
-	while (!cin.fail())
+	while (month != "Q")
 	{
-		string m;
+		string month;
+		int year;
+		cout << "Enter a month and year or Q to quit: ";
+		cin >> month >> year;
+		int m;
 
-		if (month == 1)
-			m = "January";
-		else if (month == 2)
-			m = "February";
-		else if (month == 3)
-			m = "March";
-		else if (month == 4)
-			m = "April";
-		else if (month == 5)
-			m = "May";
-		else if (month == 6)
-			m = "June";
-		else if (month == 7)
-			m = "July";
-		else if (month == 8)
-			m = "August";
-		else if (month == 9)
-			m = "September";
-		else if (month == 10)
-			m = "October";
-		else if (month == 11)
-			m = "November";
+		if (month == "January")
+			m = 1;
+		else if (month == "February")
+			m = 2;
+		else if (month == "March")
+			m = 3;
+		else if (month == "April")
+			m = 4;
+		else if (month == "May")
+			m = 5;
+		else if (month == "June")
+			m = 6;
+		else if (month == "July")
+			m = 7;
+		else if (month == "August")
+			m = 8;
+		else if (month == "September")
+			m = 9;
+		else if (month == "October")
+			m = 10;
+		else if (month == "November")
+			m = 11;
 		else
-			m = "December";
+			m = 12;
 
-		int weekday = dayOfWeek(month, day, year);
+		int day = 1;
+		int weekday = dayOfWeek(m, day, year);
 		string d;
 		if (weekday == 0)
 			d = "Saturday";
@@ -60,10 +65,50 @@ int main()
 		else
 			d = "Friday";
 
-		cout << d << ", " << m << " " << day << ", " << year << endl;
+		//cout << d << ", " << m << " " << day << ", " << year << endl;
 		
-		cout << "Enter a date Q to quit: ";
-		cin >> month >> day >> year;
+		
+
+
+		// Sa Fr Th We Tu Mo Su
+		// 00 01 02 03 04 05 06 07 08 09 10 11 12
+		// 01234567890123456789012345678901234567
+		string calendar[6] =
+	  { "                   1  2  3  4  5  6  7 ",
+		" 2  3  4  5  6  7  8  9 10 11 12 13 14 ",
+		" 9 10 11 12 13 14 15 16 17 18 19 20 21 ",
+		"16 17 18 19 20 21 22 23 24 25 26 27 28 ",
+		"23 24 25 26 27 28 29 30 31 ",
+		"30 31 " };
+
+		int skips = (weekday - 1) * 3;
+
+		cout << endl;
+		cout << month << " " << year << endl;
+		cout << "Su Mo Tu We Th Fr Sa" << endl;
+
+		for (int i = 0; i < daysInMonth(m, year); i++)
+		{
+			if (dayOfWeek(m, i + 1, year) == 1)
+				cout << endl;
+
+			//cout << dayOfWeek(m, i + 1, year) << endl;
+
+			if (i == 0)
+			{
+				for (int j = 0; j < skips; j++)
+					cout << " ";
+			}
+
+			if (i < 9)
+				cout << " ";
+			cout << i + 1 << " ";
+		}
+
+		cout << endl;
+
+		cout << "Enter a month and year Q to quit: ";
+		cin >> month >> year;
 	}
 }
 
