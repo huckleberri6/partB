@@ -11,11 +11,19 @@ int main()
 {
 	string month;
 	int year;
-	cout << "Enter a month and year or Q to quit: ";
-	cin >> month >> year;
+	cout << "Enter a month and year Q to quit: ";
+	cin >> month;
+	if (month == "Q")
+		return 1;
+
+	cin >> year;
+	if (cin.fail())
+		return 1;
 
 	while (month != "Q")
 	{
+		if (cin.fail())
+			break;
 		string month;
 		int year;
 		cout << "Enter a month and year or Q to quit: ";
@@ -108,7 +116,13 @@ int main()
 		cout << endl;
 
 		cout << "Enter a month and year Q to quit: ";
-		cin >> month >> year;
+		cin >> month;
+		if (month == "Q")
+			break;
+
+		cin >> year;
+		if (cin.fail())
+			break;
 	}
 }
 
