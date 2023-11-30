@@ -4,45 +4,66 @@ using namespace std;
 
 bool isLeapYear(int year);
 int daysInMonth(int month, int year);
+int dayOfWeek(int month, int day, int year);
 
 int main()
 {
+	int day;
 	int month;
 	int year;
-	cout << "Enter a month and year or Q to quit: ";
-	cin >> month >> year;
+	cout << "Enter a date or Q to quit: ";
+	cin >> month >> day >> year;
 
 	while (!cin.fail())
 	{
-		int days = daysInMonth(month, year);
-		if (month == 1)
-			cout << "January " << year << " has " << days << " days" << endl;
-		else if (month == 2)
-			cout << "February " << year << " has " << days << " days" << endl;
-		else if (month == 3)
-			cout << "March " << year << " has " << days << " days" << endl;
-		else if (month == 4)
-			cout << "April " << year << " has " << days << " days" << endl;
-		else if (month == 5)
-			cout << "May " << year << " has " << days << " days" << endl;
-		else if (month == 6)
-			cout << "June " << year << " has " << days << " days" << endl;
-		else if (month == 7)
-			cout << "July " << year << " has " << days << " days" << endl;
-		else if (month == 8)
-			cout << "August " << year << " has " << days << " days" << endl;
-		else if (month == 9)
-			cout << "September " << year << " has " << days << " days" << endl;
-		else if (month == 10)
-			cout << "October " << year << " has " << days << " days" << endl;
-		else if (month == 11)
-			cout << "November " << year << " has " << days << " days" << endl;
-		else if (month == 12)
-			cout << "December " << year << " has " << days << " days" << endl;
+		string m;
 
+		if (month == 1)
+			m = "January";
+		else if (month == 2)
+			m = "February";
+		else if (month == 3)
+			m = "March";
+		else if (month == 4)
+			m = "April";
+		else if (month == 5)
+			m = "May";
+		else if (month == 6)
+			m = "June";
+		else if (month == 7)
+			m = "July";
+		else if (month == 8)
+			m = "August";
+		else if (month == 9)
+			m = "September";
+		else if (month == 10)
+			m = "October";
+		else if (month == 11)
+			m = "November";
+		else
+			m = "December";
+
+		int weekday = dayOfWeek(month, day, year);
+		string d;
+		if (weekday == 0)
+			d = "Saturday";
+		else if (weekday == 1)
+			d = "Sunday";
+		else if (weekday == 2)
+			d = "Monday";
+		else if (weekday == 3)
+			d = "Tuesday";
+		else if (weekday == 4)
+			d = "Wednesday";
+		else if (weekday == 5)
+			d = "Thursday";
+		else
+			d = "Friday";
+
+		cout << d << ", " << m << " " << day << ", " << year << endl;
 		
-		cout << "Enter a month and year or Q to quit: ";
-		cin >> month >> year;
+		cout << "Enter a date Q to quit: ";
+		cin >> month >> day >> year;
 	}
 }
 
@@ -108,5 +129,24 @@ int daysInMonth(int month, int year)
 		return 31;
 
 	return -1;
+}
 
+/**
+dayOfWeek - Computes the weekday of a given date.
+@param year the year
+@param month the month (1 = January ... 12 = December)
+@param day the day of the month
+@return the weekday (0 = Saturday ... 6 = Friday)
+*/
+int dayOfWeek(int month, int day, int year)
+{
+	if (month < 3)
+	{
+		month += 12;
+		year--;
+	}
+
+	int weekday = (day + ( ( (month + 1) * 26 ) / 10 ) + year + ( year / 4 ) + 6 * ( year / 100 ) + ( year / 400) ) % 7;
+	//int weekday = (day + (13 * (month + 1)) / 5 + year + year / 4 - year / 100 + year / 400) % 7;
+	return weekday;
 }
