@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
 using namespace std;
 
 bool isLeapYear(int year);
@@ -11,7 +12,7 @@ int main()
 {
 	string month;
 	int year;
-	cout << "Enter a month and year Q to quit: ";
+	cout << "Enter a month and year or Q to quit: ";
 	cin >> month;
 	if (month == "Q")
 		return 1;
@@ -22,12 +23,6 @@ int main()
 
 	while (month != "Q")
 	{
-		if (cin.fail())
-			break;
-		string month;
-		int year;
-		cout << "Enter a month and year or Q to quit: ";
-		cin >> month >> year;
 		int m;
 
 		if (month == "January")
@@ -91,31 +86,54 @@ int main()
 
 		int skips = (weekday - 1) * 3;
 
+
+		string filename = month.substr(0,3) + to_string(year) + ".txt";
+		ofstream file(filename);
+
 		cout << endl;
 		cout << month << " " << year << endl;
 		cout << "Su Mo Tu We Th Fr Sa" << endl;
 
+		file << month << " " << year << endl;
+		file << "Su Mo Tu We Th Fr Sa" << endl;
+
 		for (int i = 0; i < daysInMonth(m, year); i++)
 		{
 			if (dayOfWeek(m, i + 1, year) == 1)
+			{
 				cout << endl;
+				file << endl;
+			}
 
 			//cout << dayOfWeek(m, i + 1, year) << endl;
 
 			if (i == 0)
 			{
 				for (int j = 0; j < skips; j++)
+				{
 					cout << " ";
+					file << " ";
+				}
 			}
 
 			if (i < 9)
+			{
 				cout << " ";
+				file << " ";
+			}
 			cout << i + 1 << " ";
+			file << i + 1 << " ";
 		}
 
 		cout << endl;
+		file << endl;
+		cout << endl;
+		file << endl;
 
-		cout << "Enter a month and year Q to quit: ";
+		cout << "Output file: " << filename << endl;
+		cout << endl;
+
+		cout << "Enter a month and year or Q to quit: ";
 		cin >> month;
 		if (month == "Q")
 			break;
